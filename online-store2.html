@@ -130,24 +130,6 @@
             flex-shrink: 0;
         }
 
-        .sidebar-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 2rem;
-            cursor: pointer;
-            text-align: center;
-        }
-
-        .sidebar-logo img {
-            height: 40px;
-            width: auto;
-            object-fit: contain;
-        }
-
         .sidebar h2 {
             font-size: 1.5rem;
             margin-bottom: 1.5rem;
@@ -503,15 +485,6 @@
                 border-bottom: 2px solid #eee;
             }
 
-            .sidebar-logo {
-                font-size: 1.2rem;
-                margin-bottom: 1rem;
-            }
-
-            .sidebar-logo img {
-                height: 30px;
-            }
-
             .sidebar h2 {
                 font-size: 1.2rem;
             }
@@ -623,10 +596,6 @@
     <div class="inner-wrapper">
         <!-- Sidebar -->
         <aside class="sidebar">
-            <div class="sidebar-logo" onclick="showHome()">
-                <img id="sidebarLogoImage" src="" alt="Logo" style="display: none;">
-                <span></span>
-            </div>
             <h2>Categories</h2>
             <ul id="categoryMenu">
                 <!-- Categories will be dynamically loaded here -->
@@ -811,7 +780,6 @@
             updateCartCount();
             loadCategoryMenu();
             updateStoreLogo();
-            updateSidebarLogo();
             showHome();
         }
 
@@ -1863,7 +1831,6 @@
             localStorage.setItem('layoutSettings', JSON.stringify(layoutSettings));
             applyLayoutSettings();
             updateStoreLogo();
-            updateSidebarLogo();
             showMessage('success', 'Layout settings saved successfully!');
             
             // If we're currently on the home page, refresh it to show the new title
@@ -1878,7 +1845,6 @@
                 localStorage.removeItem('layoutSettings');
                 applyLayoutSettings();
                 updateStoreLogo();
-                updateSidebarLogo();
                 showAdminLayout();
                 showMessage('success', 'Layout settings reset to default!');
             }
@@ -1912,23 +1878,6 @@
                     logoImageElement.style.display = 'block';
                 } else {
                     logoImageElement.style.display = 'none';
-                }
-            }
-        }
-
-        function updateSidebarLogo() {
-            const layoutSettings = JSON.parse(localStorage.getItem('layoutSettings') || '{}');
-            const storeName = layoutSettings.storeName || 'Professional Store';
-            const logoImage = layoutSettings.logoImage || '';
-            const sidebarLogo = document.querySelector('.sidebar-logo');
-            const sidebarLogoImage = document.getElementById('sidebarLogoImage');
-            if (sidebarLogo && sidebarLogoImage) {
-                sidebarLogo.querySelector('span').textContent = storeName;
-                if (logoImage) {
-                    sidebarLogoImage.src = logoImage;
-                    sidebarLogoImage.style.display = 'block';
-                } else {
-                    sidebarLogoImage.style.display = 'none';
                 }
             }
         }
@@ -1990,7 +1939,6 @@
             // Apply saved layout settings
             applyLayoutSettings();
             updateStoreLogo();
-            updateSidebarLogo();
             
             // Apply saved SEO settings
             const seoSettings = JSON.parse(localStorage.getItem('seoSettings') || '{}');
