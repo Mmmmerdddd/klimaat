@@ -65,6 +65,7 @@
             height: 70px;
             width: auto;
             object-fit: contain;
+            display: none; /* Hidden by default, shown via JS if URL exists */
         }
 
         nav {
@@ -215,7 +216,7 @@
             text-decoration: none;
             display: inline-block;
             touch-action: manipulation;
-            min-height: 44px; /* Ensure touch target size */
+            min-height: 44px;
         }
 
         .btn:hover {
@@ -595,7 +596,7 @@
             }
 
             .logo img {
-                height: 30px;
+                height: 30px; /* Adjusted for mobile */
             }
 
             .btn, .close {
@@ -615,6 +616,10 @@
 
             .logo {
                 font-size: 1.1rem;
+            }
+
+            .logo img {
+                height: 24px; /* Smaller logo for very small screens */
             }
 
             .hero h1 {
@@ -678,8 +683,8 @@
     <header>
         <div class="header-content">
             <div class="logo" onclick="showHome()">
-                <img id="headerLogoImage" src="" alt="Logo" style="display: none;">
-                <span>Professional Store</span>
+                <img id="headerLogoImage" src="" alt="Store Logo">
+                <span id="storeName">Professional Store</span>
             </div>
             <nav id="mainNav">
                 <button class="hamburger" onclick="toggleNav()">☰</button>
@@ -2008,10 +2013,11 @@
             const layoutSettings = JSON.parse(localStorage.getItem('layoutSettings') || '{}');
             const storeName = layoutSettings.storeName || 'Professional Store';
             const logoImage = layoutSettings.logoImage || '';
-            const logo = document.querySelector('.logo');
             const logoImageElement = document.getElementById('headerLogoImage');
-            if (logo && logoImageElement) {
-                logo.querySelector('span').textContent = storeName;
+            const storeNameElement = document.getElementById('storeName');
+            
+            if (logoImageElement && storeNameElement) {
+                storeNameElement.textContent = storeName;
                 if (logoImage) {
                     logoImageElement.src = logoImage;
                     logoImageElement.style.display = 'block';
