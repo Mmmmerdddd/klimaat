@@ -116,6 +116,15 @@
             z-index: 900;
         }
 
+        .sidebar-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            cursor: pointer;
+            text-align: center;
+        }
+
         .sidebar h2 {
             font-size: 1.5rem;
             margin-bottom: 1.5rem;
@@ -474,6 +483,11 @@
                 border-bottom: 2px solid #eee;
             }
 
+            .sidebar-logo {
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+            }
+
             .sidebar h2 {
                 font-size: 1.2rem;
             }
@@ -576,6 +590,7 @@
 
     <!-- Sidebar -->
     <aside class="sidebar">
+        <div class="sidebar-logo" onclick="showHome()"></div>
         <h2>Categories</h2>
         <ul id="categoryMenu">
             <!-- Categories will be dynamically loaded here -->
@@ -758,6 +773,7 @@
             // Update UI
             updateCartCount();
             loadCategoryMenu();
+            updateSidebarLogo();
             showHome();
         }
 
@@ -1804,6 +1820,7 @@
             localStorage.setItem('layoutSettings', JSON.stringify(layoutSettings));
             applyLayoutSettings();
             updateStoreName();
+            updateSidebarLogo();
             showMessage('success', 'Layout settings saved successfully!');
             
             // If we're currently on the home page, refresh it to show the new title
@@ -1818,6 +1835,7 @@
                 localStorage.removeItem('layoutSettings');
                 applyLayoutSettings();
                 updateStoreName();
+                updateSidebarLogo();
                 showAdminLayout();
                 showMessage('success', 'Layout settings reset to default!');
             }
@@ -1844,6 +1862,15 @@
             const logo = document.querySelector('.logo');
             if (logo) {
                 logo.textContent = storeName;
+            }
+        }
+
+        function updateSidebarLogo() {
+            const layoutSettings = JSON.parse(localStorage.getItem('layoutSettings') || '{}');
+            const storeName = layoutSettings.storeName || 'Professional Store';
+            const sidebarLogo = document.querySelector('.sidebar-logo');
+            if (sidebarLogo) {
+                sidebarLogo.textContent = storeName;
             }
         }
 
@@ -1904,6 +1931,7 @@
             // Apply saved layout settings
             applyLayoutSettings();
             updateStoreName();
+            updateSidebarLogo();
             
             // Apply saved SEO settings
             const seoSettings = JSON.parse(localStorage.getItem('seoSettings') || '{}');
