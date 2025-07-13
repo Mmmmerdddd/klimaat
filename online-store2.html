@@ -52,9 +52,18 @@
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             font-size: 1.5rem;
             font-weight: bold;
             cursor: pointer;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
         }
 
         nav ul {
@@ -122,12 +131,21 @@
         }
 
         .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             font-size: 1.5rem;
             font-weight: bold;
             color: var(--primary-color);
             margin-bottom: 2rem;
             cursor: pointer;
             text-align: center;
+        }
+
+        .sidebar-logo img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
         }
 
         .sidebar h2 {
@@ -326,6 +344,7 @@
         input[type="number"],
         input[type="date"],
         input[type="color"],
+        input[type="url"],
         select,
         textarea {
             width: 100%;
@@ -489,6 +508,10 @@
                 margin-bottom: 1rem;
             }
 
+            .sidebar-logo img {
+                height: 30px;
+            }
+
             .sidebar h2 {
                 font-size: 1.2rem;
             }
@@ -520,6 +543,10 @@
             .modal-content {
                 width: 95%;
                 margin: 10% auto;
+            }
+
+            .logo img {
+                height: 30px;
             }
         }
 
@@ -569,7 +596,10 @@
     <!-- Header -->
     <header>
         <div class="header-content">
-            <div class="logo" onclick="showHome()">Professional Store</div>
+            <div class="logo" onclick="showHome()">
+                <img id="headerLogoImage" src="" alt="Logo" style="display: none;">
+                <span>Professional Store</span>
+            </div>
             <nav>
                 <ul>
                     <li><a href="#" onclick="showHome()">Home</a></li>
@@ -593,7 +623,10 @@
     <div class="inner-wrapper">
         <!-- Sidebar -->
         <aside class="sidebar">
-            <div class="sidebar-logo" onclick="showHome()"></div>
+            <div class="sidebar-logo" onclick="showHome()">
+                <img id="sidebarLogoImage" src="" alt="Logo" style="display: none;">
+                <span></span>
+            </div>
             <h2>Categories</h2>
             <ul id="categoryMenu">
                 <!-- Categories will be dynamically loaded here -->
@@ -777,6 +810,7 @@
             // Update UI
             updateCartCount();
             loadCategoryMenu();
+            updateStoreLogo();
             updateSidebarLogo();
             showHome();
         }
@@ -1784,6 +1818,10 @@
                         <input type="text" id="storeName" value="${layoutSettings.storeName || 'Professional Store'}" required>
                     </div>
                     <div class="form-group">
+                        <label for="logoImage">Logo Image URL</label>
+                        <input type="url" id="logoImage" value="${layoutSettings.logoImage || ''}" placeholder="https://example.com/logo.png">
+                    </div>
+                    <div class="form-group">
                         <label for="primaryColor">Primary Color</label>
                         <input type="color" id="primaryColor" value="${layoutSettings.primaryColor || '#2c3e50'}">
                     </div>
@@ -1814,6 +1852,7 @@
             
             const layoutSettings = {
                 storeName: document.getElementById('storeName').value,
+                logoImage: document.getElementById('logoImage').value,
                 primaryColor: document.getElementById('primaryColor').value,
                 secondaryColor: document.getElementById('secondaryColor').value,
                 accentColor: document.getElementById('accentColor').value,
@@ -1823,7 +1862,7 @@
             
             localStorage.setItem('layoutSettings', JSON.stringify(layoutSettings));
             applyLayoutSettings();
-            updateStoreName();
+            updateStoreLogo();
             updateSidebarLogo();
             showMessage('success', 'Layout settings saved successfully!');
             
@@ -1838,7 +1877,7 @@
             if (confirm('Are you sure you want to reset to default layout settings?')) {
                 localStorage.removeItem('layoutSettings');
                 applyLayoutSettings();
-                updateStoreName();
+                updateStoreLogo();
                 updateSidebarLogo();
                 showAdminLayout();
                 showMessage('success', 'Layout settings reset to default!');
@@ -1860,21 +1899,37 @@
             }
         }
 
-        function updateStoreName() {
+        function updateStoreLogo() {
             const layoutSettings = JSON.parse(localStorage.getItem('layoutSettings') || '{}');
             const storeName = layoutSettings.storeName || 'Professional Store';
+            const logoImage = layoutSettings.logoImage || '';
             const logo = document.querySelector('.logo');
-            if (logo) {
-                logo.textContent = storeName;
+            const logoImageElement = document.getElementById('headerLogoImage');
+            if (logo && logoImageElement) {
+                logo.querySelector('span').textContent = storeName;
+                if (logoImage) {
+                    logoImageElement.src = logoImage;
+                    logoImageElement.style.display = 'block';
+                } else {
+                    logoImageElement.style.display = 'none';
+                }
             }
         }
 
         function updateSidebarLogo() {
             const layoutSettings = JSON.parse(localStorage.getItem('layoutSettings') || '{}');
             const storeName = layoutSettings.storeName || 'Professional Store';
+            const logoImage = layoutSettings.logoImage || '';
             const sidebarLogo = document.querySelector('.sidebar-logo');
-            if (sidebarLogo) {
-                sidebarLogo.textContent = storeName;
+            const sidebarLogoImage = document.getElementById('sidebarLogoImage');
+            if (sidebarLogo && sidebarLogoImage) {
+                sidebarLogo.querySelector('span').textContent = storeName;
+                if (logoImage) {
+                    sidebarLogoImage.src = logoImage;
+                    sidebarLogoImage.style.display = 'block';
+                } else {
+                    sidebarLogoImage.style.display = 'none';
+                }
             }
         }
 
@@ -1934,7 +1989,7 @@
             
             // Apply saved layout settings
             applyLayoutSettings();
-            updateStoreName();
+            updateStoreLogo();
             updateSidebarLogo();
             
             // Apply saved SEO settings
