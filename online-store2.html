@@ -28,7 +28,6 @@
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--light-bg);
-            padding-left: var(--sidebar-width);
         }
 
         /* Header Styles */
@@ -102,18 +101,33 @@
             font-weight: bold;
         }
 
+        /* Inner Wrapper Styles */
+        .inner-wrapper {
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 0 2rem;
+            display: flex;
+            gap: 2rem;
+        }
+
         /* Sidebar Styles */
         .sidebar {
-            position: fixed;
-            top: 80px;
-            left: 0;
             width: var(--sidebar-width);
-            height: calc(100vh - 80px);
             background-color: var(--white);
             box-shadow: 2px 0 5px rgba(0,0,0,0.1);
             padding: 2rem;
             overflow-y: auto;
             z-index: 900;
+            flex-shrink: 0;
+        }
+
+        .sidebar-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            cursor: pointer;
+            text-align: center;
         }
 
         .sidebar h2 {
@@ -143,14 +157,12 @@
 
         /* Main Content */
         main {
-            margin-top: 80px;
+            flex: 1;
             min-height: calc(100vh - 80px);
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
+            padding: 2rem 0;
         }
 
         /* Hero Section */
@@ -461,17 +473,20 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            body {
-                padding-left: 0;
+            .inner-wrapper {
+                flex-direction: column;
+                padding: 0 1rem;
             }
 
             .sidebar {
-                position: static;
                 width: 100%;
-                height: auto;
-                padding: 1rem;
                 box-shadow: none;
                 border-bottom: 2px solid #eee;
+            }
+
+            .sidebar-logo {
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
             }
 
             .sidebar h2 {
@@ -574,18 +589,22 @@
         </div>
     </header>
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <h2>Categories</h2>
-        <ul id="categoryMenu">
-            <!-- Categories will be dynamically loaded here -->
-        </ul>
-    </aside>
+    <!-- Inner Wrapper -->
+    <div class="inner-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo" onclick="showHome()"></div>
+            <h2>Categories</h2>
+            <ul id="categoryMenu">
+                <!-- Categories will be dynamically loaded here -->
+            </ul>
+        </aside>
 
-    <!-- Main Content -->
-    <main id="mainContent">
-        <!-- Content will be dynamically loaded here -->
-    </main>
+        <!-- Main Content -->
+        <main id="mainContent">
+            <!-- Content will be dynamically loaded here -->
+        </main>
+    </div>
 
     <!-- Login Modal -->
     <div id="loginModal" class="modal">
@@ -758,6 +777,7 @@
             // Update UI
             updateCartCount();
             loadCategoryMenu();
+            updateSidebarLogo();
             showHome();
         }
 
@@ -896,13 +916,13 @@
             const heroSubtitle = layoutSettings.heroSubtitle || 'Quality products with professional installation services';
             
             mainContent.innerHTML = `
-                <div class="hero">
-                    <h1>${heroTitle}</h1>
-                    <p>${heroSubtitle}</p>
-                    <button class="btn" onclick="showAllProducts()">Browse All Products</button>
-                </div>
-                
                 <div class="container">
+                    <div class="hero">
+                        <h1>${heroTitle}</h1>
+                        <p>${heroSubtitle}</p>
+                        <button class="btn" onclick="showAllProducts()">Browse All Products</button>
+                    </div>
+                    
                     <h2 class="section-title">Featured Products</h2>
                     <div class="product-grid">
                         ${featuredProducts.map(product => createProductCard(product)).join('')}
@@ -1804,6 +1824,7 @@
             localStorage.setItem('layoutSettings', JSON.stringify(layoutSettings));
             applyLayoutSettings();
             updateStoreName();
+            updateSidebarLogo();
             showMessage('success', 'Layout settings saved successfully!');
             
             // If we're currently on the home page, refresh it to show the new title
@@ -1818,6 +1839,7 @@
                 localStorage.removeItem('layoutSettings');
                 applyLayoutSettings();
                 updateStoreName();
+                updateSidebarLogo();
                 showAdminLayout();
                 showMessage('success', 'Layout settings reset to default!');
             }
@@ -1844,6 +1866,15 @@
             const logo = document.querySelector('.logo');
             if (logo) {
                 logo.textContent = storeName;
+            }
+        }
+
+        function updateSidebarLogo() {
+            const layoutSettings = JSON.parse(localStorage.getItem('layoutSettings') || '{}');
+            const storeName = layoutSettings.storeName || 'Professional Store';
+            const sidebarLogo = document.querySelector('.sidebar-logo');
+            if (sidebarLogo) {
+                sidebarLogo.textContent = storeName;
             }
         }
 
@@ -1904,6 +1935,7 @@
             // Apply saved layout settings
             applyLayoutSettings();
             updateStoreName();
+            updateSidebarLogo();
             
             // Apply saved SEO settings
             const seoSettings = JSON.parse(localStorage.getItem('seoSettings') || '{}');
