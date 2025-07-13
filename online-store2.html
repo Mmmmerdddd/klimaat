@@ -28,6 +28,7 @@
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--light-bg);
+            overflow-x: hidden;
         }
 
         /* Header Styles */
@@ -45,7 +46,7 @@
         .header-content {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -55,7 +56,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 5vw, 1.5rem);
             font-weight: bold;
             cursor: pointer;
         }
@@ -66,16 +67,22 @@
             object-fit: contain;
         }
 
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
         nav ul {
             list-style: none;
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
             align-items: center;
         }
 
         nav a {
             color: var(--white);
             text-decoration: none;
+            font-size: clamp(0.9rem, 4vw, 1rem);
             transition: opacity 0.3s;
         }
 
@@ -92,6 +99,7 @@
         .nav-icon {
             cursor: pointer;
             position: relative;
+            font-size: clamp(1.2rem, 5vw, 1.5rem);
         }
 
         .cart-count {
@@ -110,13 +118,13 @@
             font-weight: bold;
         }
 
-        /* Inner Wrapper Styles */
-        .inner-wrapper {
-            max-width: 1200px;
-            margin: 80px auto 0;
-            padding: 0 2rem;
-            display: flex;
-            gap: 2rem;
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--white);
         }
 
         /* Sidebar Styles */
@@ -124,16 +132,18 @@
             width: var(--sidebar-width);
             background-color: var(--white);
             box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-            padding: 2rem;
+            padding: 1.5rem;
             overflow-y: auto;
             z-index: 900;
             flex-shrink: 0;
+            transition: transform 0.3s ease-in-out;
         }
 
         .sidebar h2 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
+            font-size: clamp(1.2rem, 5vw, 1.5rem);
+            margin-bottom: 1rem;
             color: var(--primary-color);
+            cursor: pointer;
         }
 
         .sidebar ul {
@@ -141,13 +151,13 @@
         }
 
         .sidebar li {
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
         }
 
         .sidebar a {
             color: var(--text-color);
             text-decoration: none;
-            font-size: 1rem;
+            font-size: clamp(0.9rem, 4vw, 1rem);
             transition: color 0.3s;
         }
 
@@ -156,46 +166,56 @@
         }
 
         /* Main Content */
+        .inner-wrapper {
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 0 1rem;
+            display: flex;
+            gap: 1.5rem;
+        }
+
         main {
             flex: 1;
             min-height: calc(100vh - 80px);
         }
 
         .container {
-            padding: 2rem 0;
+            padding: 1.5rem 0;
         }
 
         /* Hero Section */
         .hero {
             background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
             color: var(--white);
-            padding: 4rem 2rem;
+            padding: 3rem 1rem;
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             border-radius: 10px;
         }
 
         .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
+            margin-bottom: 0.75rem;
         }
 
         .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
+            font-size: clamp(1rem, 4vw, 1.2rem);
+            margin-bottom: 1.5rem;
         }
 
         .btn {
             background-color: var(--accent-color);
             color: var(--white);
-            padding: 0.75rem 2rem;
+            padding: 0.75rem 1.5rem;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: clamp(0.9rem, 4vw, 1rem);
             transition: background-color 0.3s;
             text-decoration: none;
             display: inline-block;
+            touch-action: manipulation;
+            min-height: 44px; /* Ensure touch target size */
         }
 
         .btn:hover {
@@ -212,17 +232,17 @@
 
         /* Product Grid */
         .section-title {
-            font-size: 2rem;
-            margin-bottom: 2rem;
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            margin-bottom: 1.5rem;
             text-align: center;
             color: var(--primary-color);
         }
 
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .product-card {
@@ -250,26 +270,26 @@
         }
 
         .product-info {
-            padding: 1.5rem;
+            padding: 1rem;
         }
 
         .product-title {
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 4vw, 1.2rem);
             margin-bottom: 0.5rem;
             color: var(--primary-color);
         }
 
         .product-price {
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 4.5vw, 1.5rem);
             color: var(--accent-color);
             font-weight: bold;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
         }
 
         .product-description {
             color: #666;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            font-size: clamp(0.85rem, 3.5vw, 0.9rem);
         }
 
         /* Modal Styles */
@@ -287,21 +307,26 @@
 
         .modal-content {
             background-color: var(--white);
-            margin: 5% auto;
-            padding: 2rem;
+            margin: 10% auto;
+            padding: 1.5rem;
             border-radius: 10px;
             width: 90%;
-            max-width: 600px;
+            max-width: 500px;
             position: relative;
         }
 
         .close {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 2rem;
+            top: 0.5rem;
+            right: 0.5rem;
+            font-size: 1.5rem;
             cursor: pointer;
             color: #999;
+            min-height: 44px;
+            min-width: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .close:hover {
@@ -310,7 +335,7 @@
 
         /* Form Styles */
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         label {
@@ -318,6 +343,7 @@
             margin-bottom: 0.5rem;
             font-weight: 500;
             color: var(--primary-color);
+            font-size: clamp(0.9rem, 4vw, 1rem);
         }
 
         input[type="text"],
@@ -333,8 +359,9 @@
             padding: 0.75rem;
             border: 1px solid #ddd;
             border-radius: 5px;
-            font-size: 1rem;
+            font-size: clamp(0.9rem, 4vw, 1rem);
             transition: border-color 0.3s;
+            min-height: 44px;
         }
 
         input:focus,
@@ -352,14 +379,14 @@
 
         /* Cart Styles */
         .cart-items {
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .cart-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem;
+            padding: 0.75rem;
             border-bottom: 1px solid #eee;
         }
 
@@ -370,21 +397,23 @@
         .cart-item-title {
             font-weight: 500;
             margin-bottom: 0.25rem;
+            font-size: clamp(0.9rem, 4vw, 1rem);
         }
 
         .cart-item-options {
-            font-size: 0.9rem;
+            font-size: clamp(0.8rem, 3.5vw, 0.9rem);
             color: #666;
         }
 
         .cart-item-price {
             font-weight: bold;
             color: var(--accent-color);
+            font-size: clamp(0.9rem, 4vw, 1rem);
         }
 
         .cart-total {
             text-align: right;
-            font-size: 1.25rem;
+            font-size: clamp(1rem, 4.5vw, 1.25rem);
             font-weight: bold;
             margin-top: 1rem;
             padding-top: 1rem;
@@ -395,25 +424,28 @@
         .admin-panel {
             background-color: var(--white);
             border-radius: 10px;
-            padding: 2rem;
-            margin-bottom: 2rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .admin-tabs {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
             border-bottom: 2px solid #eee;
+            overflow-x: auto;
+            white-space: nowrap;
         }
 
         .admin-tab {
-            padding: 0.75rem 1.5rem;
+            padding: 0.5rem 1rem;
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: clamp(0.9rem, 4vw, 1rem);
             color: #666;
             transition: color 0.3s;
+            flex-shrink: 0;
         }
 
         .admin-tab.active {
@@ -439,8 +471,9 @@
 
         th, td {
             text-align: left;
-            padding: 1rem;
+            padding: 0.75rem;
             border-bottom: 1px solid #eee;
+            font-size: clamp(0.85rem, 3.5vw, 0.9rem);
         }
 
         th {
@@ -453,7 +486,7 @@
         .order-status {
             padding: 0.25rem 0.75rem;
             border-radius: 20px;
-            font-size: 0.875rem;
+            font-size: clamp(0.8rem, 3.5vw, 0.875rem);
             font-weight: 500;
         }
 
@@ -472,54 +505,128 @@
             color: #0f5132;
         }
 
-        /* Responsive */
+        /* Responsive Styles */
         @media (max-width: 768px) {
             .inner-wrapper {
                 flex-direction: column;
-                padding: 0 1rem;
+                padding: 0 0.5rem;
+                margin-top: 60px;
             }
 
             .sidebar {
                 width: 100%;
                 box-shadow: none;
                 border-bottom: 2px solid #eee;
+                transform: translateY(-100%);
+                position: fixed;
+                top: 60px;
+                left: 0;
+                z-index: 800;
+                background-color: var(--white);
+                max-height: calc(100vh - 60px);
+                overflow-y: auto;
+            }
+
+            .sidebar.active {
+                transform: translateY(0);
             }
 
             .sidebar h2 {
-                font-size: 1.2rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .sidebar h2::after {
+                content: '▼';
+                transition: transform 0.3s;
+            }
+
+            .sidebar.active h2::after {
+                transform: rotate(180deg);
             }
 
             .sidebar ul {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 1rem;
+                display: none;
+            }
+
+            .sidebar.active ul {
+                display: block;
             }
 
             .sidebar li {
-                margin-bottom: 0;
+                margin-bottom: 0.5rem;
             }
 
             nav ul {
+                display: none;
                 flex-direction: column;
-                gap: 1rem;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary-color);
+                padding: 1rem;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             }
 
-            .hero h1 {
-                font-size: 2rem;
+            nav.active ul {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero {
+                padding: 2rem 1rem;
             }
 
             .product-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                grid-template-columns: 1fr;
                 gap: 1rem;
             }
 
             .modal-content {
                 width: 95%;
-                margin: 10% auto;
+                margin: 15% auto;
+                max-height: 80vh;
+                overflow-y: auto;
             }
 
             .logo img {
                 height: 30px;
+            }
+
+            .btn, .close {
+                min-height: 48px;
+                min-width: 48px;
+            }
+
+            input, select, textarea {
+                min-height: 48px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content {
+                padding: 0 0.5rem;
+            }
+
+            .logo {
+                font-size: 1.1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+            }
+
+            .section-title {
+                font-size: 1.3rem;
             }
         }
 
@@ -541,12 +648,13 @@
 
         /* Messages */
         .message {
-            padding: 1rem;
+            padding: 0.75rem;
             border-radius: 5px;
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-size: clamp(0.85rem, 3.5vw, 0.9rem);
         }
 
         .message-success {
@@ -573,7 +681,8 @@
                 <img id="headerLogoImage" src="" alt="Logo" style="display: none;">
                 <span>Professional Store</span>
             </div>
-            <nav>
+            <nav id="mainNav">
+                <button class="hamburger" onclick="toggleNav()">☰</button>
                 <ul>
                     <li><a href="#" onclick="showHome()">Home</a></li>
                     <li><a href="#" onclick="showAllProducts()">Products</a></li>
@@ -595,8 +704,8 @@
     <!-- Inner Wrapper -->
     <div class="inner-wrapper">
         <!-- Sidebar -->
-        <aside class="sidebar">
-            <h2>Categories</h2>
+        <aside class="sidebar" id="sidebar">
+            <h2 onclick="toggleSidebar()">Categories</h2>
             <ul id="categoryMenu">
                 <!-- Categories will be dynamically loaded here -->
             </ul>
@@ -625,7 +734,7 @@
                 <button type="submit" class="btn">Login</button>
                 <button type="button" class="btn btn-secondary" onclick="showRegister()">Register</button>
             </form>
-            <div style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+            <div style="margin-top: 1rem; font-size: clamp(0.8rem, 3.5vw, 0.9rem); color: #666;">
                 <p>Demo Accounts:</p>
                 <p>Customer: customer@demo.com / password123</p>
                 <p>Admin: admin@demo.com / admin123</p>
@@ -909,6 +1018,8 @@
 
         // UI Navigation functions
         function showHome() {
+            toggleNav(false);
+            toggleSidebar(false);
             const mainContent = document.getElementById('mainContent');
             const featuredProducts = products.filter(p => p.featured);
             
@@ -934,6 +1045,8 @@
         }
 
         function showAllProducts() {
+            toggleNav(false);
+            toggleSidebar(false);
             const mainContent = document.getElementById('mainContent');
             
             mainContent.innerHTML = `
@@ -947,6 +1060,8 @@
         }
 
         function showCategoryProducts(categoryId) {
+            toggleNav(false);
+            toggleSidebar(false);
             const category = categories.find(c => c.id === categoryId);
             const categoryProducts = products.filter(p => p.category === categoryId);
             const mainContent = document.getElementById('mainContent');
@@ -976,6 +1091,8 @@
         }
 
         function showProductOptions(productId) {
+            toggleNav(false);
+            toggleSidebar(false);
             const product = products.find(p => p.id === productId);
             const modal = document.createElement('div');
             modal.className = 'modal';
@@ -1013,6 +1130,8 @@
         }
 
         function showCart() {
+            toggleNav(false);
+            toggleSidebar(false);
             const modal = document.getElementById('cartModal');
             const cartContent = document.getElementById('cartContent');
             
@@ -1062,6 +1181,8 @@
         }
 
         function showCheckoutForm() {
+            toggleNav(false);
+            toggleSidebar(false);
             const mainContent = document.getElementById('mainContent');
             mainContent.innerHTML = `
                 <div class="container">
@@ -1146,6 +1267,8 @@
         }
 
         function showOrderConfirmation(order) {
+            toggleNav(false);
+            toggleSidebar(false);
             const mainContent = document.getElementById('mainContent');
             mainContent.innerHTML = `
                 <div class="container">
@@ -1170,6 +1293,8 @@
         }
 
         function showOrders() {
+            toggleNav(false);
+            toggleSidebar(false);
             if (!currentUser) {
                 showLogin();
                 showMessage('info', 'Please login to view your orders');
@@ -1218,6 +1343,8 @@
         }
 
         function showOrderDetails(orderId) {
+            toggleNav(false);
+            toggleSidebar(false);
             const order = orders.find(o => o.id === orderId);
             if (!order) return;
             
@@ -1262,6 +1389,8 @@
         }
 
         function showContact() {
+            toggleNav(false);
+            toggleSidebar(false);
             const mainContent = document.getElementById('mainContent');
             mainContent.innerHTML = `
                 <div class="container">
@@ -1302,6 +1431,8 @@
 
         // Admin Panel functions
         function showAdminPanel() {
+            toggleNav(false);
+            toggleSidebar(false);
             if (!currentUser || currentUser.role !== 'admin') {
                 showHome();
                 return;
@@ -1399,6 +1530,8 @@
         }
 
         function showAddProductForm() {
+            toggleNav(false);
+            toggleSidebar(false);
             const modal = document.createElement('div');
             modal.className = 'modal';
             modal.style.display = 'block';
@@ -1479,6 +1612,8 @@
         }
 
         function editProduct(productId) {
+            toggleNav(false);
+            toggleSidebar(false);
             const product = products.find(p => p.id === productId);
             if (!product) return;
             
@@ -1608,6 +1743,8 @@
         }
 
         function showAddCategoryForm() {
+            toggleNav(false);
+            toggleSidebar(false);
             const modal = document.createElement('div');
             modal.className = 'modal';
             modal.style.display = 'block';
@@ -1775,6 +1912,8 @@
         }
 
         function showAdminLayout() {
+            toggleNav(false);
+            toggleSidebar(false);
             const adminContent = document.getElementById('adminContent');
             const layoutSettings = JSON.parse(localStorage.getItem('layoutSettings') || '{}');
             
@@ -1882,13 +2021,44 @@
             }
         }
 
+        // Mobile navigation functions
+        function toggleNav(state = null) {
+            const nav = document.getElementById('mainNav');
+            if (state !== null) {
+                nav.classList.toggle('active', state);
+            } else {
+                nav.classList.toggle('active');
+            }
+            // Close sidebar when opening nav
+            if (nav.classList.contains('active')) {
+                toggleSidebar(false);
+            }
+        }
+
+        function toggleSidebar(state = null) {
+            const sidebar = document.getElementById('sidebar');
+            if (state !== null) {
+                sidebar.classList.toggle('active', state);
+            } else {
+                sidebar.classList.toggle('active');
+            }
+            // Close nav when opening sidebar
+            if (sidebar.classList.contains('active')) {
+                toggleNav(false);
+            }
+        }
+
         // Utility functions
         function showLogin() {
+            toggleNav(false);
+            toggleSidebar(false);
             closeModal('registerModal');
             document.getElementById('loginModal').style.display = 'block';
         }
 
         function showRegister() {
+            toggleNav(false);
+            toggleSidebar(false);
             closeModal('loginModal');
             document.getElementById('registerModal').style.display = 'block';
         }
@@ -1916,14 +2086,20 @@
         function loadCategoryMenu() {
             const categoryMenu = document.getElementById('categoryMenu');
             categoryMenu.innerHTML = categories.map(category => 
-                `<li><a href="#" onclick="showCategoryProducts(${category.id})">${category.name}</a></li>`
+                `<li><a href="#" onclick="showCategoryProducts(${category.id}); toggleSidebar(false);">${category.name}</a></li>`
             ).join('');
         }
 
-        // Close modals when clicking outside
+        // Close modals and menus when clicking outside
         window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
                 event.target.style.display = 'none';
+            }
+            if (!event.target.closest('nav, .hamburger') && window.innerWidth <= 768) {
+                toggleNav(false);
+            }
+            if (!event.target.closest('.sidebar, .sidebar h2') && window.innerWidth <= 768) {
+                toggleSidebar(false);
             }
         }
 
